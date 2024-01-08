@@ -1,0 +1,54 @@
+{% extends 'core/base.html' %}
+{% block title %} Login {% endblock title %}
+
+{% block content %}
+
+<div class="mx-auto my-10 max-w-md rounded-xl border px-4 py-10 text-gray-700 shadow-lg sm:px-8">
+    <div class="mb-16 flex justify-between">
+      <span class="font-bold"><span class="inline-block h-3 w-3 bg-blue-600"></span> Giiv App</span>
+      <span class="">Don't have an account? <a href="{% url "userauth:signup" %}" class="font-medium text-blue-600 hover:underline">Create here!</a></span>
+    </div>
+    <p class="mb-5 text-3xl font-medium">Login!</p>
+    <p class="mb-6 text-sm">Sign in to your account to have access to all the application features</p>
+    
+    <form method="post" action="">
+    {% csrf_token %}
+    {{form.non_field_errors}}
+        <div class="mb-6">
+            <div class="focus-within:border-b-blue-500 relative mb-3 flex overflow-hidden border-b-2 transition">
+                <label type="username" id="username" class="w-full flex-1 appearance-none border-blue-300 bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 focus:outline-none" />
+                {{form.username }}
+            </div>
+            
+            <div class="focus-within:border-b-blue-500 relative mb-3 flex overflow-hidden border-b-2 transition">
+                <label type="email" id="email" class="w-full flex-1 appearance-none border-blue-300 bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 focus:outline-none" />
+                {{form.password }}
+            </div>
+        </div>
+
+                {% if form.errors or form.non_field_errors %}
+                    <div class="mb-3 p-6 bg-red-100 rounded-xl">
+                        {% for field in form  %}
+                            {{field.errors}}
+                        {% endfor %}
+
+                        {{form.non_field_errors}}
+                    </div>
+                {% endif %}
+                
+        <button class="mb-6 rounded-xl bg-blue-600 px-8 py-3 font-medium text-white hover:bg-blue-700">Log in</button>
+    </form>
+
+    <div class="flex mb-3 items-center justify-center dark:bg-gray-800">
+        {% load socialaccount %}
+        
+        <a href="{% provider_login_url 'google' %}" class="px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
+            <img class="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo">
+            <span>Sign in with Google</span>
+        </a>
+        
+    </div>
+        <p class="">Forgotten password? <a href="{% url "userauth:reset-password" %}" class="whitespace-nowrap font-medium text-gray-900 hover:underline">Click here</a></p>
+</div>
+  
+{% endblock content %}

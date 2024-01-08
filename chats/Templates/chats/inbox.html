@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+{% block title %} Inbox {% endblock title %}
+
+{% block content %}
+  
+<h3 class="mb-12 text-center font-sans text-3xl font-bold text-gray-900">Inbox<span class="text-blue-600">.</span></h3>
+{% for c in conversation %}
+<div class="mx-2 my-10 rounded-xl border bg-white px-1 sm:mx-auto  sm:px-8">
+    <div class="mb-2 flex flex-col gap-y-6 border-b py-8 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex items-center">
+        <img class="h-14 w-14 rounded-full object-cover" src="{{c.item.image.url}}" alt="Simon Lewis" />
+        {% for member in c.members.all %}
+        {% if member != request.user %}
+            <div class="ml-4 ">
+            <p class="text-slate-800 text-xl font-extrabold">{{member.username}}</p>
+            <p class="text-slate-500">{{c.item.title}} | {{c.modified_at}}</p>
+            </div>
+            
+            {% endif %}
+            {% endfor %}
+      </div>
+        <a href="{% url "chats:dm" c.id %}" class="flex items-center justify-center gap-1 rounded-lg border border-emerald-500 px-4 py-2 font-medium text-emerald-500 focus:outline-none focus:ring hover:bg-emerald-100">
+            <span>view message</span>
+        </a>
+    </div>
+</div>
+        {% endfor %}
+  
+{% endblock content %}

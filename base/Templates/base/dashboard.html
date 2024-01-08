@@ -1,0 +1,65 @@
+{% extends 'core/base.html' %}
+{% block title %} Dashboard {% endblock title %}
+
+{% block content %}
+
+<div class="m-10 ">
+  <div class="rounded-lg border bg-white px-4 pt-8 pb-10 shadow-lg">
+    <div class="relative mx-auto w-36 rounded-full">
+      <span class="absolute right-0 m-3 h-3 w-3 rounded-full bg-green-500 ring-2 ring-green-300 ring-offset-2"></span>
+      <img class="mx-auto h-auto w-full rounded-full" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80" alt="" />
+    </div>
+    <h1 class="my-1 text-center text-xl font-bold leading-8 text-gray-900">{{user.full_name}}</h1>
+    <h3 class="font-lg text-semibold text-center leading-6 text-gray-600">{{user.location}}</h3>
+    <ul class="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
+      <li class="flex items-center py-3 text-sm">
+        <span>Status</span>
+        <span class="ml-auto"><span class="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">Active</span></span>
+      </li>
+      <li class="flex items-center py-3 text-sm">
+        <span>Date Joined</span>
+        <span class="ml-auto">{{user.joined_at}}</span>
+      </li>
+      <li class=" items-center py-3 text-sm">
+        <span class="ml-auto"><a href="{% url "userauth:change-password" %}" class="rounded-full bg-yellow-200 py-1 px-2 text-xs font-medium text-green-700">Change password</a></span>
+      </li>
+    </ul>
+    
+  <section class="py-20">
+    <h1 class="mb-12 text-center font-sans text-5xl font-bold text-gray-900">My Items<span class="text-blue-600">.</span></h1>
+    <div class="mx-auto grid max-w-screen-xl grid-cols-1 gap-6 p-6 md:grid-cols-2 lg:grid-cols-3">
+        {% for i in items %}
+      <article class="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl">
+        <a href="#">
+          <div class="relative flex items-end overflow-hidden rounded-xl">
+            <img src="{{i.image.url}}" alt="image" />
+          </div>
+  
+          <div class="mt-1 p-2">
+            <h2 class="text-slate-700">{{i.title}}</h2>
+            <p class="text-slate-400 mt-1 text-sm">{{item.created_at}}</p>
+            
+            {% if i.is_available %}
+            <div class="mt-3 flex items-end justify-between">
+              <p>
+                <span class="font-bold text-blue-500">Available</span>
+              </p>
+              <p>
+                <span><a href="{% url "core:details" i.id %}" class="font-bold text-green-500">Details</a></span>
+              </p>
+              
+            </div>
+            {% endif %}
+          </div>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  </div>
+</div>
+
+
+  
+{% endblock content %}

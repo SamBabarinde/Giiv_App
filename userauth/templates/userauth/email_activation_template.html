@@ -1,0 +1,8 @@
+{% autoescape off %}
+Hi {{user.username}},
+
+Please click on the link below to activate your Giiv Account and have full access to the platform.
+
+{{protocol}}://{{ domain }}{% url "userauth:activate" uidb64=uid token=token %}
+
+{% endautoescape %}
